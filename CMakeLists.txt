@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 
 # project name
-set(ProjectName main)
+set(ProjectName ImageRetrieval)
 project(${ProjectName})
+
+# complier flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Boost
 find_package(Boost COMPONENTS system filesystem program_options regex REQUIRED)
