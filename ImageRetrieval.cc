@@ -60,7 +60,6 @@ int main(int argc, char** argv)
     if (boost::filesystem::is_regular_file(itr->path())) {  // not a directory
       std::string current_file = itr->path().string();
       if (current_file.compare(current_file.size()-3, 3, "jpg") == 0) {
-        // std::cout << current_file << std::endl;
         cv::Mat image;
         image = cv::imread(current_file, 1);
         cv::Mat feature = TinyGrayImage(image);
@@ -69,7 +68,6 @@ int main(int argc, char** argv)
         double ssd = SSD(feature, query_image);
 
         // store into a hash map
-        // indexing[ssd] = current_file;
         indexing[current_file] = ssd;
       }
     }
@@ -87,6 +85,7 @@ int main(int argc, char** argv)
                            return l.second > r.second;
                          });
 
+  // Display the results
   for (int i = 0; i < 10; ++i) {
     std::cout << top_ten[i].first << std::endl;
   }
