@@ -89,9 +89,6 @@ int main(int argc, char** argv)
   for (int i = 0; i < 10; ++i) {
     std::cout << top_ten[i].first << std::endl;
   }
-  cv::imshow(query_image_name, query_image);
-
-  cv::waitKey(0);
 
   return 0;
 }
