@@ -11,6 +11,7 @@ A Content-based image retrieval using visual and textual features
 ## Text features
 1. Build a Lexicon
 The top 20 words in the description of files are:
+
         3393 [a]
         3220 [and]
         2586 [with]
@@ -31,6 +32,7 @@ The top 20 words in the description of files are:
          494 [clutch]
          488 [Leather]
          432 [features]
+
 The good words for lexicon are "leather", "clutch", "Leather", and "features".
 ## Log
 1. 01/29/2015 Install OpenCV
