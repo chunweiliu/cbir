@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
-# project name
-set(ProjectName TextRetrieval)
+# project
+set(ProjectName main)
 project(${ProjectName})
 
 # complier flags
@@ -15,5 +15,5 @@ include_directories(${Boost_INCLUDE_DIRS})
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(${ProjectName} ${ProjectName}.cc )
+add_executable(${ProjectName} ${ProjectName}.cc Retrieval.cc TextRetrieval.cc ImageRetrieval.cc)
 target_link_libraries(${ProjectName} ${OpenCV_LIBS} ${Boost_LIBRARIES})

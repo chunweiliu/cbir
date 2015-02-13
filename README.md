@@ -37,3 +37,4 @@ The good words for lexicon are "leather", "clutch", "Leather", and "features".
 ## Log
 1. 01/29/2015 Install OpenCV
 2. 02/04/2015 Commit ImageRetrieval v1.0
+3. 02/12/2015 Commit TextRetrieval v1.0
