@@ -36,7 +36,7 @@ The top 20 words in the description of files are:
 
 I did not pick the good words for lexicon, such as "leather", "clutch", "Leather", and "features". Instead, I used all of the high frequency words.
 ## Log
-1. 01/29/2015 Install OpenCV
+1. 01/29/2015 Configure libraries (check the latest OpenCV and Boost)
 2. 02/04/2015 Commit ImageRetrieval v1.0
 3. 02/12/2015 Commit TextRetrieval v1.0
 4. 02/13/2015 Commit Image/Text Retrieval classes
