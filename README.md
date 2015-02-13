@@ -7,6 +7,7 @@ A Content-based image retrieval using visual and textual features
 3. CMake
 
 ## Image features
+1. A simple 32 by 32 black and white patch were using as image feature.
 
 ## Text features
 1. Build a Lexicon
@@ -33,8 +34,9 @@ The top 20 words in the description of files are:
          488 [Leather]
          432 [features]
 
-The good words for lexicon are "leather", "clutch", "Leather", and "features".
+I did not pick the good words for lexicon, such as "leather", "clutch", "Leather", and "features". Instead, I used all of the high frequency words.
 ## Log
 1. 01/29/2015 Install OpenCV
 2. 02/04/2015 Commit ImageRetrieval v1.0
 3. 02/12/2015 Commit TextRetrieval v1.0
+4. 02/13/2015 Commit Image/Text Retrieval classes
