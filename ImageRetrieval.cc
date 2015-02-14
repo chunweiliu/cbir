@@ -1,5 +1,12 @@
 #include "ImageRetrieval.h"
 
+ImageRetrieval::ImageRetrieval(std::string data_folder)
+    : Retrieval(data_folder) {
+  Build();
+  num_data_ = features_.size();
+  query_results_.resize(num_data_);
+}
+
 void ImageRetrieval::Build() {
   // Compute features for each image
   FileIterator end_itr;
@@ -21,13 +28,4 @@ cv::Mat ImageRetrieval::ComputeFeature(const std::string &filename) {
   cv::cvtColor(image, feature, CV_BGR2GRAY);
   cv::resize(feature, feature, cv::Size(32, 32), 0, 0, cv::INTER_CUBIC);
   return feature;
-}
-
-void ImageRetrieval::Query(const std::string &filename) {
-  cv::Mat query = ComputeFeature(filename);
-  Map temp;
-  for (int i = 0; i < features_.size(); ++i) {
-    temp[features_[i].first] = NSSD(query, features_[i].second);
-  }
-  Indexing(temp, query_results_);
 }

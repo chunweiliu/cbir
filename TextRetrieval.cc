@@ -1,5 +1,12 @@
 #include "TextRetrieval.h"
 
+TextRetrieval::TextRetrieval(const std::string &data_folder, int num_lexicon)
+    : Retrieval(data_folder) {
+  Build(num_lexicon);
+  num_data_ = features_.size();
+  query_results_.resize(num_data_);
+}
+
 void TextRetrieval::Build(int num_lexicon) {
   // Build the lexicon of the dataset
   FileIterator end_itr;
@@ -45,15 +52,6 @@ void TextRetrieval::MapToMat(const Map &map, cv::Mat &mat) const {
 }
 
 void TextRetrieval::PrintLexicon() const { PrintMap(lexicon_); }
-
-void TextRetrieval::Query(const std::string &filename) {
-  cv::Mat query = ComputeFeature(filename);
-  Map temp;
-  for (int i = 0; i < features_.size(); ++i) {
-    temp[features_[i].first] = NSSD(query, features_[i].second);
-  }
-  Indexing(temp, query_results_);
-}
 
 void TextRetrieval::WordsToMap(const std::string &filename, const Map &lexicon,
                                Map &vectors) {

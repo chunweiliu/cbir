@@ -17,24 +17,35 @@ class Retrieval {
  protected:
   std::string data_folder_;
   std::string query_file_;
+  int num_data_;
 
   std::vector<std::pair<std::string, cv::Mat> > features_;
   Index query_results_;
 
+  std::vector<std::string> categories_;
+
  public:
+  Retrieval() {}
   Retrieval(std::string);
 
   void SetDataFolder(std::string);
   void SetQueryFile(std::string);
   std::string GetDataFolder() const;
+  int GetNumData() const;
   std::string GetQueryFile() const;
+  Index GetQueryResults() const;
 
   void Indexing(const Map&, Index&);
   Map IndexToMap(const Index&);
-  void PrintIndex(const Index&) const;
+  void PrintIndex(const Index&, const int) const;
   void PrintMap(const Map&) const;
-  void PrintQuery() const;
+  void PrintQuery(const int) const;
   double NSSD(const cv::Mat&, const cv::Mat&);
+  void Query(const std::string&);
+  virtual cv::Mat ComputeFeature(const std::string&) = 0;
+
+  bool QueryMatch(int);
+  std::string ParseString(const std::string&);
 };
 
 #endif

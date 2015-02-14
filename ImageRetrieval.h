@@ -10,11 +10,12 @@ typedef boost::filesystem::directory_iterator FileIterator;
 
 class ImageRetrieval : public Retrieval {
  public:
-  using Retrieval::Retrieval;
+  // using Retrieval::Retrieval;
+  ImageRetrieval() {}
+  ImageRetrieval(std::string);
 
   void Build();
   cv::Mat ComputeFeature(const std::string&);
-  void Query(const std::string&);
 };
 
 #endif

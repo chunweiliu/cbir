@@ -15,11 +15,12 @@ class TextRetrieval : public Retrieval {
   Map lexicon_;
 
  public:
-  using Retrieval::Retrieval;
+  // using Retrieval::Retrieval;
+  TextRetrieval() {}
+  TextRetrieval(const std::string&, int);
 
   void Build(int);  // Build lexicon given the number of words
   cv::Mat ComputeFeature(const std::string&);
-  void Query(const std::string&);
 
   void PrintLexicon() const;
   void MapToMat(const Map&, cv::Mat&) const;
