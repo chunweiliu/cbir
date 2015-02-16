@@ -48,12 +48,20 @@ I did not kick off stop words such as "a" or "the" from the lexicon. Instead, I 
 - The hybrid feature is a linear combination of the SSDs computed from image and text features.
 - E.g `kAlpha` * SSD_image + (1-`kAlpha`) * SSD_text
 
-<!--
+
 ##Evaluations
--->
+
+### Baseline
+Using the image feature only have achieved an high accuracy of 0.925 (37/40).
+
+### Number of words in the lexicon
+The number of words in the lexicon affected the prediction accuracy. However, the way it affected was out of my expectation. 
+
+![kNumLexicon](images/kNumLexicon.png)
 
 ## Log
 1. 01/29/2015 System setup (installed the latest OpenCV and Boost, and wrote the CMakeLists.txt)
 2. 02/04/2015 Commit ImageRetrieval v1.0
 3. 02/12/2015 Commit TextRetrieval v1.0
 5. 02/14/2015 Commit HybirdRetrieval v.10
+6. 02/16/2015 Setup gflags in CMakeLists.txt failed (TODO)
