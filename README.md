@@ -7,23 +7,35 @@ A demo program of a content-based image retrieval system using visual and textua
 - Boost (the latest version download from Homebrew)
 - CMake
 
-### Compile and run
-- Clone the re
+### Compile and run in command line
+
+1. Download the repository
+
+		git clone https://github.com/chunweiliu/cbir
+2. Compile the source code
+		
+		cd cbir && mkdir build && cd build && cmake .. && make
+3. Run the demo program
+
+		$ ./demo <dataset> <queryset> <kNumQuery> <kNumLexicon> <kAlpha>"
+
+
 
 
 
 ## Overview of the program
-1. Pre-compute the image/text feature for all images in a data set
-2. Given a query image from a separated data set, compute the image/text feature of that image, and calculate the sum of square (SSD) distance between the feature of the query image and the entire data set
-3. Pick the top `kNumQuery` images in terns of minimum SSD, and then choose the majority of the ensemble as a final prediction
-4. Evaluate the accuracy of the predictions through the entire query image set
+
+1. Pre-computing the image/text feature for all images in a data set;
+2. Computing the image/text feature of a query image from another set, and calculating the sum of square (SSD) distance between the feature of the query image and the entire data set
+3. Picking the top `kNumQuery` images in terns of minimum SSD, and then choosing the majority of the ensemble as a final prediction
+4. Evaluating the accuracy of the predictions through the entire query image set
 
 ### The image feature
-- The image feature is a simple 32 by 32 black and white patch.
+The image feature is a simple 32 by 32 black and white patch.
 
 ### The text feature
-- The text feature is a histogram of lexicon choosing from top `kNumLexicon`.
-- Here is an example of a lexicon built with the 20 most frequent words (i.e. `kNumLexicon=20`) in the data set:
+The text feature is a histogram of lexicon choosing from top `kNumLexicon`. 
+Here is an example of a lexicon built with the 20 most frequent words (i.e. `kNumLexicon=20`) in the data set:
 
 ~~~
 3393 [a]
@@ -49,9 +61,7 @@ A demo program of a content-based image retrieval system using visual and textua
 ~~~
 
 ### The hybrid feature
-- The hybrid feature is a linear combination of the SSDs computed from image and text features.
-- E.g `kAlpha` * SSD_image + (1-`kAlpha`) * SSD_text
-
+The hybrid feature is a linear combination of the SSDs computed from image and text features. E.g `kAlpha` * SSD_image + (1-`kAlpha`) * SSD_text
 
 ##Evaluations
 
@@ -66,17 +76,17 @@ Even using the unpruned lexicon, the accuracy would slowly converge to an accura
 Here is a summary of the number of words in the lexicon to the accuracy:
 ![kNumLexicon](images/kNumLexicon.png)
 
-The pruned lexicon reaches the convergence accuracy rate 0.95 only using 11 words (the 11th word is "bag").
-Yet the unpruned lexicon needs 69 words (the 69th word is "These") to get an 0.95 accuracy rate.
-In both lexicon, there are some keywords (annotating in the figure) boosting the accuracy.
-Generally speaking, the burned lexicon has the following benefits:
-1. Gathering such keywords faster than the unpruned one
+The pruned lexicon reaches the convergence accuracy 0.95 only using 11 words (the 11th word is "bag").
+Yet the unpruned lexicon needs 71 words to get a 0.95 accuracy rate.
+There are some powerful keywords (annotating in the figure) boosting the accuracy.
+In summery, the burned lexicon has the following benefits:
+1. Gathering such powerful keywords faster than the unpruned one
 2. Having no distraction from the stop words
 
 ### The hybrid feature
-From the above results we know the best accuracy using image feature is 0.925 and the best accuracy using text feature is 1 with a pruned lexicon with `kNumLexicon=39` chose from the top 62 frequent words.
+From the above results we know the accuracy using image feature is 0.925 and the best accuracy using text feature is 1 with a pruned lexicon of `kNumLexicon=39`, chosen from the top 62 frequent words.
 The hybrid feature might not perform better than that lexicon.
-So let's make a scenario for the hybrid feature.
+So let's make a scenario to see the benefit for the hybrid feature.
 
 Say we only have limit budget on the number of lexicon, for instance, `kNumLexicon=8` for reaching the 0.925 accuracy.
 With the hybrid feature, the result can be slightly better than the individual image/text retrieval.
