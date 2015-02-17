@@ -17,7 +17,7 @@ A demo program of a content-based image retrieval system using visual and textua
 		cd cbir && mkdir build && cd build && cmake .. && make
 3. Run the demo program
 
-		$ ./demo <dataset> <queryset> <kNumQuery> <kNumLexicon> <kAlpha>"
+		./demo <dataset> <queryset> <kNumQuery> <kNumLexicon> <kAlpha>"
 
 
 
