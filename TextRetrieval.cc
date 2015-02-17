@@ -18,9 +18,8 @@ void TextRetrieval::Build(int num_lexicon) {
       }
     }
   }
-  Index index(num_lexicon);
-  Indexing(data_, index);
-  lexicon_ = IndexToMap(index);
+  // BuildUnpurnedLexicon(num_lexicon);
+  BuildPurnedLexicon(num_lexicon);
 
   // Compute features for each image
   for (FileIterator itr(data_folder_); itr != end_itr; ++itr) {
@@ -35,6 +34,41 @@ void TextRetrieval::Build(int num_lexicon) {
   }
 }
 
+void TextRetrieval::BuildUnpurnedLexicon(int num_lexicon) {
+  Index index(num_lexicon);
+  Indexing(data_, index);
+  lexicon_ = IndexToMap(index);
+  // PrintIndex(index, index.size());
+  // PrintLexicon();
+}
+
+void TextRetrieval::BuildPurnedLexicon(int num_lexicon) {
+  Index index(num_lexicon);
+  Indexing(data_, index);
+  // remove stop words
+  std::vector<std::string> stop_words = {
+      "A",    "The", "This",  "With",  "a",    "an", "and",  "are", "as",
+      "at",   "for", "from",  "in",    "is",   "of", "on",   "or",  "our",
+      "that", "the", "their", "these", "this", "to", "with", "you", "your"};
+
+  for (int i = 0; i < index.size(); ++i) {
+    bool flag = false;
+    for (int j = 0; j < stop_words.size(); ++j) {
+      if (index[i].first.compare(stop_words[j]) == 0) {
+        flag = true;
+        break;
+      }
+    }
+    if (flag == true) {
+      std::swap(index[i--], index.back());
+      index.pop_back();
+    }
+  }
+  lexicon_ = IndexToMap(index);
+  // PrintIndex(index, index.size());
+  // PrintLexicon();
+}
+
 cv::Mat TextRetrieval::ComputeFeature(const std::string &filename) {
   Map map;
   WordsToMap(filename, lexicon_, map);
@@ -45,13 +79,23 @@ cv::Mat TextRetrieval::ComputeFeature(const std::string &filename) {
 }
 
 void TextRetrieval::MapToMat(const Map &map, cv::Mat &mat) const {
-  int i = 0;
+  int i = 0, max = 1;
   for (MapIterator itr = map.begin(); itr != map.end(); ++itr) {
     mat.at<double>(0, i++) = itr->second;
+
+    // if (itr->second > max) {
+    //   max = itr->second;
+    // }
   }
+  // for (MapIterator itr = map.begin(); itr != map.end(); ++itr) {
+  //   mat.at<double>(0, i++) /= max;
+  // }
 }
 
-void TextRetrieval::PrintLexicon() const { PrintMap(lexicon_); }
+void TextRetrieval::PrintLexicon() const {
+  std::cout << "Lexicon (" << lexicon_.size() << ")" << std::endl;
+  PrintMap(lexicon_);
+}
 
 void TextRetrieval::WordsToMap(const std::string &filename, const Map &lexicon,
                                Map &vectors) {
@@ -74,4 +118,13 @@ void TextRetrieval::WordsToMap(const std::string &filename, Map &vectors) {
   while (infile >> word) {
     vectors[word]++;
   }
+}
+
+double TextRetrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
+  double ssd = 0;
+  for (int i = 0; i < mat1.cols * mat1.rows; ++i) {
+    ssd -= (mat1.at<double>(i) - mat2.at<double>(i)) *
+           (mat1.at<double>(i) - mat2.at<double>(i));
+  }
+  return ssd / (mat1.cols * mat1.rows);
 }
