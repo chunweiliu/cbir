@@ -68,8 +68,20 @@ The burned lexicon has the following benefits:
 2. Having no distraction from the stop words
 
 ### The hybrid feature
+From the above results we know the best accuracy using image feature is 0.925 and the best accuracy using text feature is 1.00 (with `kNumLexicon=41` chosed from the top 65 frequent words).
+The hybrid feature couldn't be better than that text feature in this dataset and it shouldn't worse than the image feature baseline.
+In other word, the accuracy of hybrid feature should be in [0.925, 1].
 
+If we have a powerful textual feature, we cannot wrong anyway. But if we have a week textual feature, can it still helps?
+This is the result with `kNumLexicon=20`:
 
+| `kAlpha` | Text | Hybrid | Image |
+| -------- |:----:|:------:|:------|
+| 0        | 0.65 | 0.925  | 0.925 |
+| 0.1      | 0.65 | 0.95   | 0.925 |
+| 0.01     | 0.65 | 0.95   | 0.925 |
+
+The answer is Yes.
 
 
 ## Log
