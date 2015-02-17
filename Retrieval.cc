@@ -40,8 +40,8 @@ Map Retrieval::IndexToMap(const Index &index) {
 void Retrieval::PrintIndex(const Index &index, const int num_print) const {
   const int num = index.size() > num_print ? num_print : index.size();
   for (int i = 0; i < num; ++i) {
-    std::cout << std::setw(10) << std::setprecision(3) << index[i].second
-              << " [" << index[i].first << "]" << std::endl;
+    std::cout << std::setw(3) << i + 1 << std::setw(10) << std::setprecision(3)
+              << index[i].second << " [" << index[i].first << "]" << std::endl;
   }
 }
 
@@ -56,15 +56,6 @@ void Retrieval::PrintQuery(const int num_print) const {
   PrintIndex(query_results_, num_print);
 }
 
-double Retrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
-  double ssd = 0;
-  for (int i = 0; i < mat1.cols * mat1.rows; ++i) {
-    ssd -= (mat1.at<uchar>(i) - mat2.at<uchar>(i)) *
-           (mat1.at<uchar>(i) - mat2.at<uchar>(i));
-  }
-  return ssd / (mat1.cols * mat1.rows);
-}
-
 bool Retrieval::QueryMatch(int num_query) {
   const std::string query_category = ParseString(query_file_);
 
@@ -76,7 +67,7 @@ bool Retrieval::QueryMatch(int num_query) {
   Indexing(category_votes, top_votes);
 
   // debug message
-  // std::cout << query_category << std::endl;
+  // std::cout << "Query: " << query_category << std::endl;
   // PrintIndex(top_votes, 2);
 
   if (query_category.compare(ParseString(top_votes[0].first)) == 0) {

@@ -40,9 +40,10 @@ class Retrieval {
   void PrintIndex(const Index&, const int) const;
   void PrintMap(const Map&) const;
   void PrintQuery(const int) const;
-  double NSSD(const cv::Mat&, const cv::Mat&);
   void Query(const std::string&);
+
   virtual cv::Mat ComputeFeature(const std::string&) = 0;
+  virtual double NSSD(const cv::Mat&, const cv::Mat&) = 0;
 
   bool QueryMatch(int);
   std::string ParseString(const std::string&);
