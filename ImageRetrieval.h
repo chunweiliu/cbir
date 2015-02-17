@@ -16,6 +16,7 @@ class ImageRetrieval : public Retrieval {
 
   void Build();
   cv::Mat ComputeFeature(const std::string&);
+  double NSSD(const cv::Mat&, const cv::Mat&);
 };
 
 #endif

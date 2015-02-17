@@ -29,3 +29,13 @@ cv::Mat ImageRetrieval::ComputeFeature(const std::string &filename) {
   cv::resize(feature, feature, cv::Size(32, 32), 0, 0, cv::INTER_CUBIC);
   return feature;
 }
+
+double ImageRetrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
+  double ssd = 0;
+  for (int i = 0; i < mat1.cols * mat1.rows; ++i) {
+    ssd -= (mat1.at<uchar>(i) - mat2.at<uchar>(i)) *
+           (mat1.at<uchar>(i) - mat2.at<uchar>(i));
+  }
+  ssd /= (mat1.cols * mat1.rows);
+  return ssd / 256;
+}
