@@ -23,24 +23,25 @@ void HybridRetrieval::Query(const std::string& imagefile) {
   std::string textfile = imagefile;
   Replace(textfile, "img", "descr");
   Replace(textfile, "jpg", "txt");
+
   tr_.Query(textfile);
   ir_.Query(imagefile);
 
   // two query list should be aligned
-  query_results_ = ir_.GetQueryResults();  // deligation size of query
-
+  query_results_.resize(
+      ir_.GetQueryResults().size());  // deligation size of query
   Index ir_query = ir_.GetQueryResults();
   Index tr_query = tr_.GetQueryResults();
 
   Map ir_map = IndexToMap(ir_query);
   Map tr_map = IndexToMap(tr_query);
+
   int i = 0;
   for (MapIterator ir_itr = ir_map.begin(), tr_itr = tr_map.begin();
-       ir_itr != ir_map.end(); ++ir_itr, ++tr_itr) {
+       ir_itr != ir_map.end(); ++ir_itr, ++tr_itr, ++i) {
     query_results_[i].first = ir_itr->first;
     query_results_[i].second =
-        alpha_ * ir_itr->second + (1 - alpha_) * tr_itr->second;
-    i++;
+        alpha_ * ir_itr->second + (1.0 - alpha_) * tr_itr->second;
   }
 
   std::sort(query_results_.begin(), query_results_.end(),

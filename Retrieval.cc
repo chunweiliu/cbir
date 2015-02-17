@@ -67,7 +67,7 @@ bool Retrieval::QueryMatch(int num_query) {
   Indexing(category_votes, top_votes);
 
   // debug
-  // std::cout << "Query: " << query_category << std::endl;
+  // std::cout << "Query: " << query_file_ << std::endl;
   // PrintIndex(top_votes, 2);
 
   if (query_category.compare(ParseString(top_votes[0].first)) == 0) {

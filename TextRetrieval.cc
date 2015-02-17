@@ -13,7 +13,8 @@ void TextRetrieval::Build(int num_lexicon) {
   for (FileIterator itr(data_folder_); itr != end_itr; ++itr) {
     if (boost::filesystem::is_regular_file(itr->path())) {
       std::string current_file = itr->path().string();
-      if (current_file.compare(current_file.size() - 3, 3, "txt") == 0) {
+      if (current_file.compare(current_file.size() - 3, 3, "txt") == 0 &&
+          current_file.find("descr") != std::string::npos) {
         WordsToMap(current_file, data_);
       }
     }
@@ -25,7 +26,8 @@ void TextRetrieval::Build(int num_lexicon) {
   for (FileIterator itr(data_folder_); itr != end_itr; ++itr) {
     if (boost::filesystem::is_regular_file(itr->path())) {
       std::string current_file = itr->path().string();
-      if (current_file.compare(current_file.size() - 3, 3, "txt") == 0) {
+      if (current_file.compare(current_file.size() - 3, 3, "txt") == 0 &&
+          current_file.find("descr") != std::string::npos) {
         cv::Mat mat = ComputeFeature(current_file);
         std::pair<std::string, cv::Mat> feature(current_file, mat);
         features_.push_back(feature);
@@ -39,7 +41,6 @@ void TextRetrieval::BuildUnpurnedLexicon(int num_lexicon) {
   Indexing(data_, index);
   lexicon_ = IndexToMap(index);
   // PrintIndex(index, index.size());
-  // PrintLexicon();
 }
 
 void TextRetrieval::BuildPurnedLexicon(int num_lexicon) {
@@ -65,8 +66,6 @@ void TextRetrieval::BuildPurnedLexicon(int num_lexicon) {
     }
   }
   lexicon_ = IndexToMap(index);
-  // PrintIndex(index, index.size());
-  // PrintLexicon();
 }
 
 cv::Mat TextRetrieval::ComputeFeature(const std::string &filename) {
@@ -93,7 +92,9 @@ void TextRetrieval::PrintLexicon() const {
 void TextRetrieval::WordsToMap(const std::string &filename, const Map &lexicon,
                                Map &vectors) {
   for (MapIterator itr = lexicon.begin(); itr != lexicon.end(); ++itr) {
-    vectors[itr->first] = 0;
+    double signiture = ((double)rand() / (double)RAND_MAX);  // cannot
+    // compare between zeros
+    vectors[itr->first] = signiture / 100;
   }
 
   std::ifstream infile(filename);
@@ -120,5 +121,5 @@ double TextRetrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
     ssd -= (mat1.at<double>(i) - mat2.at<double>(i)) *
            (mat1.at<double>(i) - mat2.at<double>(i));
   }
-  return ssd / (mat1.cols * mat1.rows);
+  return ssd;  // / (mat1.cols * mat1.rows);
 }
