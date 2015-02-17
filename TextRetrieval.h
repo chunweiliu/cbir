@@ -28,6 +28,7 @@ class TextRetrieval : public Retrieval {
   void MapToMat(const Map&, cv::Mat&) const;
   void WordsToMap(const std::string&, const Map&, Map&);
   void WordsToMap(const std::string&, Map&);
+
   double NSSD(const cv::Mat&, const cv::Mat&);
 };
 

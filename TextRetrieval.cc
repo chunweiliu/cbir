@@ -79,17 +79,10 @@ cv::Mat TextRetrieval::ComputeFeature(const std::string &filename) {
 }
 
 void TextRetrieval::MapToMat(const Map &map, cv::Mat &mat) const {
-  int i = 0, max = 1;
+  int i = 0;
   for (MapIterator itr = map.begin(); itr != map.end(); ++itr) {
     mat.at<double>(0, i++) = itr->second;
-
-    // if (itr->second > max) {
-    //   max = itr->second;
-    // }
   }
-  // for (MapIterator itr = map.begin(); itr != map.end(); ++itr) {
-  //   mat.at<double>(0, i++) /= max;
-  // }
 }
 
 void TextRetrieval::PrintLexicon() const {
@@ -123,6 +116,7 @@ void TextRetrieval::WordsToMap(const std::string &filename, Map &vectors) {
 double TextRetrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
   double ssd = 0;
   for (int i = 0; i < mat1.cols * mat1.rows; ++i) {
+    // negative value for reusing the Indexing function
     ssd -= (mat1.at<double>(i) - mat2.at<double>(i)) *
            (mat1.at<double>(i) - mat2.at<double>(i));
   }

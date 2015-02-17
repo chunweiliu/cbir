@@ -66,7 +66,7 @@ bool Retrieval::QueryMatch(int num_query) {
   Index top_votes(categories_.size());
   Indexing(category_votes, top_votes);
 
-  // debug message
+  // debug
   // std::cout << "Query: " << query_category << std::endl;
   // PrintIndex(top_votes, 2);
 

@@ -33,9 +33,10 @@ cv::Mat ImageRetrieval::ComputeFeature(const std::string &filename) {
 double ImageRetrieval::NSSD(const cv::Mat &mat1, const cv::Mat &mat2) {
   double ssd = 0;
   for (int i = 0; i < mat1.cols * mat1.rows; ++i) {
+    // negative sign for reusing the Indexing function
     ssd -= (mat1.at<uchar>(i) - mat2.at<uchar>(i)) *
            (mat1.at<uchar>(i) - mat2.at<uchar>(i));
   }
   ssd /= (mat1.cols * mat1.rows);
-  return ssd / 256;
+  return ssd / 256;  // normalize the range to [0, 1]
 }

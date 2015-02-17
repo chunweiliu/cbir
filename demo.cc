@@ -24,21 +24,21 @@ int main(int argc, char** argv) {
   FileIterator end_itr;
 
   // Test image retrieval
-  // ImageRetrieval ir(dataset);
-  // correct = 0, total = 0;
-  // for (FileIterator itr(queryset); itr != end_itr; ++itr) {
-  //   if (boost::filesystem::is_regular_file(itr->path())) {
-  //     std::string current_file = itr->path().string();
-  //     if (current_file.compare(current_file.size() - 3, 3, "jpg") == 0) {
-  //       ir.Query(current_file);
-  //       if (ir.QueryMatch(kNumQuery)) correct++;
-  //       total++;
-  //     }
-  //   }
-  // }
-  // std::cout << "Image retrieval accuracy: " << std::setprecision(3)
-  //           << correct / total << " (" << correct << "/" << total << ")"
-  //           << std::endl;
+  ImageRetrieval ir(dataset);
+  correct = 0, total = 0;
+  for (FileIterator itr(queryset); itr != end_itr; ++itr) {
+    if (boost::filesystem::is_regular_file(itr->path())) {
+      std::string current_file = itr->path().string();
+      if (current_file.compare(current_file.size() - 3, 3, "jpg") == 0) {
+        ir.Query(current_file);
+        if (ir.QueryMatch(kNumQuery)) correct++;
+        total++;
+      }
+    }
+  }
+  std::cout << "Image retrieval accuracy: " << std::setprecision(3)
+            << correct / total << " (" << correct << "/" << total << ")"
+            << std::endl;
 
   // Test textual retrieval
   TextRetrieval tr(dataset, kNumLexicon);
@@ -57,20 +57,20 @@ int main(int argc, char** argv) {
             << correct / total << " (" << correct << "/" << total << ")"
             << std::endl;
 
-  // // Test hyber retrieval
-  // HybridRetrieval hr(dataset, kNumLexicon, kAlpha);
-  // correct = 0, total = 0;
-  // for (FileIterator itr(queryset); itr != end_itr; ++itr) {
-  //   if (boost::filesystem::is_regular_file(itr->path())) {
-  //     std::string current_file = itr->path().string();
-  //     if (current_file.compare(current_file.size() - 3, 3, "jpg") == 0) {
-  //       hr.Query(current_file);
-  //       if (hr.QueryMatch(kNumQuery)) correct++;
-  //       total++;
-  //     }
-  //   }
-  // }
-  // std::cout << "Hybrid retrieval accuracy: " << std::setprecision(3)
-  //           << correct / total << " (" << correct << "/" << total << ")"
-  //           << std::endl;
+  // Test hyber retrieval
+  HybridRetrieval hr(dataset, kNumLexicon, kAlpha);
+  correct = 0, total = 0;
+  for (FileIterator itr(queryset); itr != end_itr; ++itr) {
+    if (boost::filesystem::is_regular_file(itr->path())) {
+      std::string current_file = itr->path().string();
+      if (current_file.compare(current_file.size() - 3, 3, "jpg") == 0) {
+        hr.Query(current_file);
+        if (hr.QueryMatch(kNumQuery)) correct++;
+        total++;
+      }
+    }
+  }
+  std::cout << "Hybrid retrieval accuracy: " << std::setprecision(3)
+            << correct / total << " (" << correct << "/" << total << ")"
+            << std::endl;
 }

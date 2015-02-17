@@ -17,7 +17,9 @@ class HybridRetrieval : public Retrieval {
   void Build();
   void Query(const std::string &);
   bool Replace(std::string &, const std::string &, const std::string &);
+
   cv::Mat ComputeFeature(const std::string &);
+  double NSSD(const cv::Mat &, const cv::Mat &);
 };
 
 #endif
