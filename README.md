@@ -18,7 +18,8 @@ A demo program of a content-based image retrieval system using visual and textua
 3. Run the demo program
 
 		./demo <dataset> <queryset> <kNumQuery> <kNumLexicon> <kAlpha>
-Here is an expected result:
+Here is an example of expected result:
+
 ~~~
 $ ./demo <dataset> <queryset> 9 23 0.5
 CBIR DEMO
@@ -37,7 +38,6 @@ Lexicon (8)
        413 [zip]
 Text retrieval accuracy: 0.925 (37/40)
 Hybrid retrieval accuracy: 0.95 (38/40)
-
 ~~~
 
 
